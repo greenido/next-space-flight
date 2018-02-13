@@ -10,11 +10,10 @@
 //
 // https://github.com/greenido/bitcoin-info-action
 // http://expressjs.com/en/starter/static-files.html
-// http://docs.sequelizejs.com/manual/tutorial/models-definition.html#database-synchronization
 // http://www.datejs.com/
 //
+//
 // init project pkgs
-
 const express = require('express');
 const ApiAiAssistant = require('actions-on-google').ApiAiAssistant;
 const bodyParser = require('body-parser');
@@ -22,7 +21,6 @@ const request = require('request');
 const app = express();
 const Map = require('es6-map');
 const dateJS = require('./dateLib.js');
-
 
 // Pretty JSON output for logs
 const prettyjson = require('prettyjson');
@@ -49,15 +47,15 @@ const MAX_FLIGHTS = 100;
 // Handle webhook requests
 //
 app.post('/', function(req, res, next) {
-  logObject("-- req: " , req);
-  logObject("-- res: " , res);
+  //logObject("-- req: " , req);
+  //logObject("-- res: " , res);
   
   // Instantiate a new API.AI assistant object.
   const assistant = new ApiAiAssistant({request: req, response: res});
   let flightDate = assistant.getArgument('date');
   // Declare constants for your action and parameter names
   const KEYWORD_ACTION = 'when-next-flight'; 
-  logObject('flightDate: ' , flightDate);
+  logObject('flightDate param from AOG: ' , flightDate);
   
   //
   // trim words so we won't talk for more than 2 minutes.
