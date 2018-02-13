@@ -191,10 +191,7 @@ app.post('/', function(req, res, next) {
           inx3 = html.indexOf('[', inx2);
           let desciption = html.substring(inx2, inx3);
           
-          // 
-          // Date.parse('today') ?
-          console.log("== launchDate: " + launchDate + " mission: " + mission +  " LaunchTime: " + LaunchTime +
-                     " site: " + site + " desciption: " + desciption);
+          //console.log("== launchDate: " + launchDate + " mission: " + mission +  " LaunchTime: " + LaunchTime + " site: " + site + " desciption: " + desciption);
           // check if the user wish to know about certain date
           let afterDateStr = "";
           if (flightDateObj) {
@@ -202,20 +199,20 @@ app.post('/', function(req, res, next) {
           }
           
           let res = "The next launch to sapce " + afterDateStr + " is at " + launchDate + " for " + mission + 
-              " launch time is set to " + LaunchTime + " from " + site + ". On that flight " + desciption + ". What other date do you wish to check?";
+              " launch time is set to " + LaunchTime + " from " + site + 
+              ". On that flight " + desciption + ". What other date do you wish to check?";
+           // Using 'ask' and not 'tell' as we don't wish to finish the conversation
           assistant.ask(res);
         }
         catch(error) {
           console.log("(!) Error: " + error + " json: "+ JSON.stringify(error));
         }
     }); //
-
-      // Using 'ask' and not 'tell' as we don't wish to finish the conversation
-      //assistant.ask("Sorry but you will need to give me a real term. What do you wish to search?");
-    
   }
   
+  //
   // Add handler functions to the action router.
+  //
   let actionRouter = new Map();
   actionRouter.set(KEYWORD_ACTION, getNextFlightInfo);
   
