@@ -23,9 +23,6 @@ const app = express();
 const Map = require('es6-map');
 const dateJS = require('./dateLib.js');
 
-// so we could save the queries for later improvments
-var Sequelize = require('sequelize'); 
-var KeywordDB;
 
 // Pretty JSON output for logs
 const prettyjson = require('prettyjson');
@@ -45,12 +42,15 @@ request.get(GAurl, (error, response, body) => {
   console.log(" - Called the GA - " + new Date());
 });
 
+// the max iterations we will do to find the next flight.
+const MAX_FLIGHTS = 100;
+
 //
 // Handle webhook requests
 //
 app.post('/', function(req, res, next) {
-  //logObject("-- req: " , req);
-  //logObject("-- res: " , res);
+  logObject("-- req: " , req);
+  logObject("-- res: " , res);
   
   // Instantiate a new API.AI assistant object.
   const assistant = new ApiAiAssistant({request: req, response: res});
@@ -110,9 +110,15 @@ app.post('/', function(req, res, next) {
     return html;
   }
   
+  //
   // Create functions to handle intents here
+  //
   function getNextFlightInfo(assistant) {
-    console.log('** Handling action: ' + KEYWORD_ACTION + " date: " + flightDate);
+    let flightDateObj = null;
+    if (flightDate != undefined && flightDate != null) {
+      flightDateObj = Date.parse(flightDate);
+    }
+    console.log('** Handling action: ' + KEYWORD_ACTION + " date from user: " + flightDate + " Our calc date: " + flightDateObj);
 
     request({ method: 'GET',
              url:'https://spaceflightnow.com/launch-schedule/'},
@@ -135,18 +141,37 @@ app.post('/', function(req, res, next) {
           
           let launchDateVal = Date.parse(launchDate + " 2018");
           let curDate = Date.parse("today");
-          console.log("== launchDate: " + launchDate+ " | launchDateVal: " + launchDateVal + " curDate: " + curDate);
+          if (flightDateObj != null) {
+            curDate = flightDateObj;
+          }
+          
+          console.log("== launchDate: " + launchDate + " | launchDateVal: " + launchDateVal + " curDate: " + curDate);
           let i = 1;
-          while (launchDateVal.getTime() < curDate.getTime() && i < 20) {
+          while (launchDateVal.getTime() < curDate.getTime() && i < MAX_FLIGHTS) {
             // keep looking for the next launch
-            console.log("== launchDateVal: " + launchDateVal + " curDate: " + curDate);
+            //console.log(i + ") launchDateVal: " + launchDateVal + " curDate: " + curDate);
             inx2 = html.indexOf('datename', inx4) + 8;
             inx3 = html.indexOf('launchdate', inx2) + 12;
             inx4 = html.indexOf('<', inx3) ;
             launchDate = html.substring(inx3, inx4);
             launchDate = launchDate.replace('.', '');
+            let inx55 = launchDate.indexOf('/');
+            if (inx55 > 1) {
+              launchDate = launchDate.substring(0, inx55);
+            }
             launchDateVal = Date.parse(launchDate + " 2018");
+            if (launchDateVal == null) {
+              // so we could pass and move on to the next launch date
+              launchDateVal = Date.parse("t - 2d");
+            }
+            //console.log(" NEW launchDateVal: " + launchDateVal);
             i++;
+          }
+          
+          if (i >= MAX_FLIGHTS) {
+            curDate = curDate.toLocaleDateString("en-US");
+            assistant.ask("Could not find any launch that is plan after " + curDate + ". Do you wish to check another date?");
+            return;
           }
           
           inx2 = html.indexOf('mission', inx4) + 9;
@@ -163,20 +188,25 @@ app.post('/', function(req, res, next) {
           let site = html.substring(inx2, inx3);
           
           inx2 = html.indexOf('missdescrip', inx3) + 13;
-          inx3 = html.indexOf('[<span', inx2);
+          inx3 = html.indexOf('[', inx2);
           let desciption = html.substring(inx2, inx3);
           
           // 
           // Date.parse('today') ?
           console.log("== launchDate: " + launchDate + " mission: " + mission +  " LaunchTime: " + LaunchTime +
                      " site: " + site + " desciption: " + desciption);
-          // Let's have 100 words per answer as we have limit of 2min per response.
-          let res = "The next launch to sapce is at " + launchDate + " for " + mission + 
-              " launch time is set to " + LaunchTime + " from " + site + ". On that flight " + desciption + " Want to hear it again?";
+          // check if the user wish to know about certain date
+          let afterDateStr = "";
+          if (flightDateObj) {
+            afterDateStr = " after " + flightDateObj.toLocaleDateString("en-US");
+          }
+          
+          let res = "The next launch to sapce " + afterDateStr + " is at " + launchDate + " for " + mission + 
+              " launch time is set to " + LaunchTime + " from " + site + ". On that flight " + desciption + ". What other date do you wish to check?";
           assistant.ask(res);
         }
         catch(error) {
-          console.log("(!) Error: " + JSON.stringify(error));
+          console.log("(!) Error: " + error + " json: "+ JSON.stringify(error));
         }
     }); //
 
