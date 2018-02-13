@@ -1,0 +1,69 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flight to Space Action on Google</title>
+    <link id="favicon" rel="icon" href="https://gomix.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+      <meta name="author" content="Ido Green | greenido.wordpress.com | @greenido">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <center>
+    <header>
+      <h1>Flight to Space Action on Google</h1>
+    </header>
+    <div class="glitchButton" style="position: absolute; top: 40px; right: 40px;"></div>
+      <p>
+        Action on google to get interesting stuff from wikipedia and get smarter.
+      </p>
+    <br><br>
+    <hr>
+    <main>
+      <h3>
+<!--         Check it live on the <a href="https://assistant.google.com/services/a/id/16cdd4b305feaf8a/">Google Assistant</a> or right here below. -->
+      </h3>
+  <iframe
+    width="350"
+    height="430"
+    src="https://console.dialogflow.com/api-client/demo/embedded/next-flight-2-space">
+</iframe>
+      <h4>
+<!--         <a href="https://github.com/greenido/wikipedia-friend-aog/" target="_blank">Source Code</a> on GitHub -->
+      </h4>
+      <hr>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/ykSFAs6S_Kg" frameborder="0" allowfullscreen></iframe>
+    </main>
+      <br><br>
+      <h2>
+        For more: <a href="https://ido-green.appspot.com">Ido's Talks and Code</a>
+    </h2>
+</center>
+    <script src="https://button.glitch.me/button.js" data-style="glitch"></script>
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="/client.js"></script>
+  </body>
+  <!-- GA -->
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-27750723-1', 'auto');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+    </script>
+</html>
