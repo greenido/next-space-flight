@@ -19,6 +19,7 @@ On the front-end,
 
 ### (More) Videos
 [![](https://cdn.glitch.com/5e52a72f-da3a-4415-b9e8-014f7884e589%2Faog-videos-best-practices-ido.png?1510886484980)](https://www.youtube.com/playlist?list=PLOU2XLYxmsILvfJcIASBDbgfxloFz_XsU)
+<br>
 What to learn more about Actions on Google with Videos? Click on the image above.
 
 
