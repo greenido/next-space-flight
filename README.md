@@ -1,11 +1,15 @@
 # When is the next flight to space?
 ![](https://greenido.files.wordpress.com/2017/11/image5.png)
-### Actions on Google to get interesting stuff from wikipedia and get smarter!
+### Actions on Google to get details on when/where there is a new flight to space
+
+### [live demo](https://next-flight-2-space.glitch.me/)
 
 ### TODOs
+  [ ] Add notifications
+  [ ] Allow customization per launch site
   [ ] Check [RSS from space.com](https://www.space.com/g00/3_c-7x78x78x78.tqbdf.dpn_/c-7NPSFQIFVT34x24iuuqtx3ax2fx2fx78x78x78.tqbdf.dpnx2fipnfx2fgffex2ftjuf.ynm_$/$/$/$?i10c.ua=1)
   
-## Your Project
+### Project Details
 
 On the back-end,
 - Your app starts at `server.js` --> This is the main file that will hold the logic of the web hook.
