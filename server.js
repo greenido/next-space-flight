@@ -79,6 +79,8 @@ app.post('/', function(req, res, next) {
   //
   function getOnlyAsciiChars(str) {
     let cleanStr = str.replace(/[^\x00-\x7F]/g, "");
+    //&#8217;
+    cleanStr = cleanStr.replace(/&#\d\d\d\d;/g, "");
     cleanStr = cleanStr.replace(/\\u\w+/g, "");
     cleanStr = cleanStr.replace(/\\n/g, "");
     return cleanStr;
@@ -143,7 +145,7 @@ app.post('/', function(req, res, next) {
             curDate = flightDateObj;
           }
           
-          console.log("== launchDate: " + launchDate + " | launchDateVal: " + launchDateVal + " curDate: " + curDate);
+          //console.log("== launchDate: " + launchDate + " | launchDateVal: " + launchDateVal + " curDate: " + curDate);
           let i = 1;
           while (launchDateVal.getTime() < curDate.getTime() && i < MAX_FLIGHTS) {
             // keep looking for the next launch
@@ -187,9 +189,9 @@ app.post('/', function(req, res, next) {
           
           inx2 = html.indexOf('missdescrip', inx3) + 13;
           inx3 = html.indexOf('[', inx2);
-          let desciption = html.substring(inx2, inx3);
-          
-          //console.log("== launchDate: " + launchDate + " mission: " + mission +  " LaunchTime: " + LaunchTime + " site: " + site + " desciption: " + desciption);
+          let description = html.substring(inx2, inx3);
+          description = getOnlyAsciiChars(description);
+          //console.log("== launchDate: " + launchDate + " mission: " + mission +  " LaunchTime: " + LaunchTime + " site: " + site + " description: " + description);
           // check if the user wish to know about certain date
           let afterDateStr = "";
           if (flightDateObj) {
@@ -198,7 +200,7 @@ app.post('/', function(req, res, next) {
           
           let res = "The next launch to sapce " + afterDateStr + " is at " + launchDate + " for " + mission + 
               " launch time is set to " + LaunchTime + " from " + site + 
-              ". On that flight " + desciption + ". What other date do you wish to check?";
+              ". On that flight " + description + ". What other date do you wish to check?";
            // Using 'ask' and not 'tell' as we don't wish to finish the conversation
           assistant.ask(res);
         }
