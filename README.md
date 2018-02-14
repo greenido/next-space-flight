@@ -2,7 +2,8 @@
 ![](https://greenido.files.wordpress.com/2017/11/image5.png)
 ### Actions on Google to get details on when/where there is a new flight to space
 
-### [live demo](https://next-flight-2-space.glitch.me/)
+## [live demo](https://next-flight-2-space.glitch.me/)
+## Or check it live on the <a href="https://assistant.google.com/services/a/uid/000000a7d9092eae?hl=en">Google Assistant</a>
 
 ### TODOs
   [ ] Add notifications
