@@ -140,12 +140,18 @@ app.post('/', function(req, res, next) {
           launchDate = launchDate.replace('.', '');
           
           let launchDateVal = Date.parse(launchDate + " 2018");
+          if (launchDateVal == null) {
+            // in case the date contain two days e.g 26/27
+            let inx44 = launchDate.indexOf('/');
+            launchDate = launchDate.substring(0, inx44);
+            launchDateVal = Date.parse(launchDate + " 2018");
+          }
           let curDate = Date.parse("today");
           if (flightDateObj != null) {
             curDate = flightDateObj;
           }
           
-          //console.log("== launchDate: " + launchDate + " | launchDateVal: " + launchDateVal + " curDate: " + curDate);
+          console.log("== launchDate: " + launchDate + " | launchDateVal: " + launchDateVal + " curDate: " + curDate);
           let i = 1;
           while (launchDateVal.getTime() < curDate.getTime() && i < MAX_FLIGHTS) {
             // keep looking for the next launch
@@ -198,7 +204,7 @@ app.post('/', function(req, res, next) {
             afterDateStr = " after " + flightDateObj.toLocaleDateString("en-US");
           }
           
-          let res = "The next launch to sapce " + afterDateStr + " is at " + launchDate + " for " + mission + 
+          let res = "The next launch to space " + afterDateStr + " is at " + launchDate + " for " + mission + 
               " launch time is set to " + LaunchTime + " from " + site + 
               ". On that flight " + description + ". What other date do you wish to check?";
            // Using 'ask' and not 'tell' as we don't wish to finish the conversation
@@ -225,7 +231,7 @@ app.post('/', function(req, res, next) {
 //
 app.use(function (err, req, res, next) {
   console.error(err.stack);
-  res.status(500).send('Oppss... could not check the western state results');
+  res.status(500).send('Oppss... could not check when is the next flight to space.');
 })
 
 //
