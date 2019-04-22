@@ -6,9 +6,13 @@
 ## Or check it live on the <a href="https://assistant.google.com/services/a/uid/000000a7d9092eae?hl=en">Google Assistant</a>
 
 ### TODOs
+
   [ ] Add notifications
+  
   [ ] Allow customization per launch site
+  
   [ ] Check [RSS from space.com](https://www.space.com/g00/3_c-7x78x78x78.tqbdf.dpn_/c-7NPSFQIFVT34x24iuuqtx3ax2fx2fx78x78x78.tqbdf.dpnx2fipnfx2fgffex2ftjuf.ynm_$/$/$/$?i10c.ua=1)
+  
   
 ### Project Details
 

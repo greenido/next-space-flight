@@ -129,6 +129,7 @@ app.post('/', function(req, res, next) {
             return;
         }
         try {  
+          let curYear = (new Date()).getFullYear();
           let html = response.body; 
           let inx11 = html.indexOf('Latest changes:') + 10;
           html = html.substring(inx11);
@@ -139,19 +140,19 @@ app.post('/', function(req, res, next) {
           let launchDate = html.substring(inx3, inx4);
           launchDate = launchDate.replace('.', '');
           
-          let launchDateVal = Date.parse(launchDate + " 2018");
+          let launchDateVal = Date.parse(launchDate + " " + curYear);
           if (launchDateVal == null) {
             // in case the date contain two days e.g 26/27
             let inx44 = launchDate.indexOf('/');
             launchDate = launchDate.substring(0, inx44);
-            launchDateVal = Date.parse(launchDate + " 2018");
+            launchDateVal = Date.parse(launchDate + " " + curYear);
           }
           let curDate = Date.parse("today");
           if (flightDateObj != null) {
             curDate = flightDateObj;
           }
           
-          console.log("== launchDate: " + launchDate + " | launchDateVal: " + launchDateVal + " curDate: " + curDate);
+          console.log("== launchDate: " + launchDate + " | launchDateVal: " + launchDateVal + " curDate: " + curDate + " CurY: " + curYear);
           let i = 1;
           while (launchDateVal.getTime() < curDate.getTime() && i < MAX_FLIGHTS) {
             // keep looking for the next launch
@@ -165,7 +166,7 @@ app.post('/', function(req, res, next) {
             if (inx55 > 1) {
               launchDate = launchDate.substring(0, inx55);
             }
-            launchDateVal = Date.parse(launchDate + " 2018");
+            launchDateVal = Date.parse(launchDate + " " + curYear);
             if (launchDateVal == null) {
               // so we could pass and move on to the next launch date
               launchDateVal = Date.parse("t - 2d");
